@@ -60,6 +60,10 @@ function setup() {
     w: 20,
     h: 20,
   }
+  
+  distance(circle, mouse);
+  maxDist(circle);
+  backgroundColor = dist*200/max;
 }
 
 function draw() {
