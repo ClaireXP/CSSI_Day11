@@ -36,27 +36,27 @@ but here are some ideas if you need inspiration.
  *    height,
  *    windowWidth, windowHeight,
  *    rect, line,
- *    text,
+ *    text, mouseX, mouseY,
  */
 
-let backgroundColor, circle, rectangle;
+let backgroundColor, circle, mouse, can, dist;
 
 function setup() {
   // Canvas & color settings
-  createCanvas(500, 400);
+  can = createCanvas(windowWidth-20, windowHeight-20);
   colorMode(HSB, 360, 100, 100);
   backgroundColor = 95;
   // This variable contains a JSON object
   circle = {
-    "x": 100,
-    "y": 100,
+    "x": random(width)-10,
+    "y": random(height)-10,
     w: 20,
     h: 20,
   }
   
-  rectangle = {
-    x: 300,
-    y: 300,
+  mouse = {
+    x: random(width),
+    y: random(height),
     w: 20,
     h: 20,
   }
@@ -65,20 +65,28 @@ function setup() {
 function draw() {
   background(backgroundColor);
   ellipse(circle.x, circle.y, circle.w, circle.h);
-  rect(rectangle.x, rectangle.y, rectangle.w, rectangle.h);
-  line(circle.x, circle.y, rectangle.x+rectangle.w/2, rectangle.y+rectangle.w/2);
+  line(circle.x, circle.y, mouse.x, mouse.y);
   
-  text(`Dist between circle and square is ${dist(circle, rectangle)}`, 10, 10);
+  distance(circle, mouse);
 }
 
 
-function dist(p, p1) {
+function distance(p, p1) {
   let deltaX = p.x - p1.x;
   let deltaY = p.y - p1.y;
-  return Math.sqrt((deltaX ** 2) + (deltaY ** 2));;
+  dist = Math.round(Math.sqrt((deltaX ** 2) + (deltaY ** 2)));
+  
+  // backgroundColor = dist%360;
+  
+  text(`Dist between circle and mouse is ${dist}.`, 10, 10);
 }
 
-function mousePressed() {
-  circle.x = random(width);
-  circle.y = random(height);
+function mousePressed(can) {
+  circle.x = random(circle.w/2, width-circle.w/2);
+  circle.y = random(circle.w/2, height-circle.w/2);
+}
+
+function mouseMoved(can){
+  mouse.x = mouseX;
+  mouse.y = mouseY;
 }
