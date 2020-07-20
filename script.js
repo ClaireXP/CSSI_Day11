@@ -37,93 +37,89 @@ but here are some ideas if you need inspiration.
  *    windowWidth, windowHeight,
  *    rect, line,
  *    text, mouseX, mouseY, textSize,
+ *    collidePointCircle,
  */
 
 let backgroundColor, circle, mouse, can, dist, temp, max;
 
 function setup() {
   // Canvas & color settings
-  can = createCanvas(windowWidth-20, windowHeight-20);
+  can = createCanvas(windowWidth - 20, windowHeight - 20);
   colorMode(HSB, 360, 100, 100);
   backgroundColor = 95;
   // This variable contains a JSON object
   circle = {
-    "x": random(10, width-10),
-    "y": random(10, height-10),
+    x: random(10, width - 10),
+    y: random(10, height - 10),
     w: 20,
-    h: 20,
-  }
-  
+    h: 20
+  };
+
   mouse = {
     x: random(width),
     y: random(height),
     w: 20,
-    h: 20,
-  }
-  
+    h: 20
+  };
+
   distance(circle, mouse);
-  maxDist(circle);
-  backgroundColor = dist*200/max;
+  maxDist();
+  backgroundColor = (dist * 250) / max;
 }
 
 function draw() {
   background(backgroundColor, 40, 80);
-  ellipse(circle.x, circle.y, circle.w, circle.h);
-  line(circle.x, circle.y, mouse.x, mouse.y);
-  
   distance(circle, mouse);
-  
   hotOrCold();
 }
 
 function distance(p, p1) {
   let deltaX = p.x - p1.x;
   let deltaY = p.y - p1.y;
-  dist = Math.sqrt((deltaX ** 2) + (deltaY ** 2));
-  
-  //textSize(10);
-  // text(`Dist between circle and mouse is ${dist}.`, 10, 10);
+  dist = Math.sqrt(deltaX ** 2 + deltaY ** 2);
 }
 
 function mousePressed(can) {
-  circle.x = random(circle.w/2, width-circle.w/2);
-  circle.y = random(circle.w/2, height-circle.w/2);
-  
-  maxDist(circle);
+  if(collidePointCircle(mouseX, mouseY, circle.x, circle.y, circle.w)){
+    circle.x = random(circle.w / 2, width - circle.w / 2);
+    circle.y = random(circle.w / 2, height - circle.w / 2);
+    
+    maxDist();
+  }
 }
 
-function maxDist(p){
+function maxDist() {
   let x = 0, y = 0;
-  
-  if(p.x > width/2){
-    if(p.y < height/2) y = height;
-  }else{
-    if(p.y < height/2) x = width;
-    else{
+
+  if (circle.x > width / 2) {
+    if (circle.y < height / 2) y = height;
+  } else {
+    if (circle.y > height / 2) x = width;
+    else {
       x = width;
       y = height;
     }
   }
-  
-  let deltaX = x - p.x;
-  let deltaY = y - p.y;
-  max = Math.sqrt((deltaX ** 2) + (deltaY ** 2));
+
+  let deltaX = x - circle.x;
+  let deltaY = y - circle.y;
+  max = Math.sqrt(deltaX ** 2 + deltaY ** 2);
 }
 
-function mouseMoved(can){
+function mouseMoved(can) {
   mouse.x = mouseX;
   mouse.y = mouseY;
-  
-  backgroundColor = dist*360/max;
+
+  backgroundColor = (dist * 250) / max;
 }
 
-function hotOrCold(){
-  if(dist<width/6) temp = "Sizzle sizzle!";
-  else if(dist<=2*width/5) temp = "Hot!";
-  else if(dist<=3*width/5) temp = "Warm.";
-  else if(dist<=4*width/5) temp = "Cool.";
+function hotOrCold() {
+  if (dist < max / 6) temp = "Sizzle sizzle!";
+  else if (dist <= max / 3) temp = "Hot!";
+  else if (dist <= max / 2) temp = "Warm.";
+  else if (dist <= (2 * max) / 3) temp = "Cool.";
   else temp = "Cold!";
-  
+
   textSize(30);
   text(`${temp}.`, 15, 40);
 }
