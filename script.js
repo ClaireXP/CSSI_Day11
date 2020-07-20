@@ -36,11 +36,10 @@ but here are some ideas if you need inspiration.
  *    height,
  *    windowWidth, windowHeight,
  *    rect, line,
- *    text, mouseX, mouseY,
+ *    text, mouseX, mouseY, textSize,
  */
 
-let backgroundColor, circle, mouse, can, dist;
-let temp;
+let backgroundColor, circle, mouse, can, dist, temp, max;
 
 function setup() {
   // Canvas & color settings
@@ -78,33 +77,40 @@ function distance(p, p1) {
   let deltaY = p.y - p1.y;
   dist = Math.sqrt((deltaX ** 2) + (deltaY ** 2));
   
-  backgroundColor = dist%360;
-  
-  text(`Dist between circle and mouse is ${dist}.`, 10, 10);
+  //textSize(10);
+  // text(`Dist between circle and mouse is ${dist}.`, 10, 10);
 }
 
 function mousePressed(can) {
   circle.x = random(circle.w/2, width-circle.w/2);
   circle.y = random(circle.w/2, height-circle.w/2);
+  
+  maxDist(circle);
 }
 
 function maxDist(p){
-  let corner = {
-    x: 0,
-    y: 0,
+  let x = 0, y = 0;
+  
+  if(p.x > width/2){
+    if(p.y < height/2) y = height;
+  }else{
+    if(p.y < height/2) x = width;
+    else{
+      x = width;
+      y = height;
+    }
   }
   
-  if(p.x < width/2){
-    if(p.y > height/2) corner.y = height;
-  }else{
-    if(p.y < height/2) corner.x ;
-    else ;
-  }
+  let deltaX = x - p.x;
+  let deltaY = y - p.y;
+  max = Math.sqrt((deltaX ** 2) + (deltaY ** 2));
 }
 
 function mouseMoved(can){
   mouse.x = mouseX;
   mouse.y = mouseY;
+  
+  backgroundColor = dist*360/max;
 }
 
 function hotOrCold(){
@@ -114,5 +120,6 @@ function hotOrCold(){
   else if(dist<=4*width/5) temp = "Cool.";
   else temp = "Cold!";
   
-  text(`${temp}.`, 10, 20);
+  textSize(30);
+  text(`${temp}.`, 15, 40);
 }
