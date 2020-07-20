@@ -22,7 +22,6 @@ but here are some ideas if you need inspiration.
 3) An art piece that changes hue based on the mouse position.
 4) An Operation style game, where you have to move from one side of the
    screen to the other without stumbling over invisible objects.
-
 */
 
 // Name any p5.js functions we use in the global so Glitch can recognize them.
@@ -37,7 +36,8 @@ but here are some ideas if you need inspiration.
  *    height,
  */
 
-let backgroundColor, spherePosition, rectPosition
+let backgroundColor, spherePos, rectPos;
+let xCan = windowWidth, yCan = windowHeight;
 
 function setup() {
   // Canvas & color settings
@@ -45,7 +45,7 @@ function setup() {
   colorMode(HSB, 360, 100, 100);
   backgroundColor = 95;
   // This variable contains a JSON object
-  spherePosition = {
+  spherePos = {
     "x": 100,
     "y": 100
   }
@@ -53,12 +53,12 @@ function setup() {
 
 function draw() {
   background(backgroundColor);
-  ellipse(spherePosition.x, spherePosition.y, 20, 20);
+  ellipse(spherePos.x, spherePos.y, 20, 20);
   // rect(rectPosition.x, rectPosition.y, 20, 20);
   // line(spherePosition.x, spherePosition.y, rectPosition.x, rectPosition.y);
 }
 
 function mousePressed() {
-  spherePosition.x = random(width);
-  spherePosition.y = random(height);
+  spherePos.x = random(width);
+  spherePos.y = random(height);
 }
