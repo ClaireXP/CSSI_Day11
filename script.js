@@ -34,10 +34,12 @@ but here are some ideas if you need inspiration.
  *    random,
  *    width,
  *    height,
+ *    windowWidth, windowHeight,
+ *    rect, line,
+ *    text,
  */
 
-let backgroundColor, spherePos, rectPos;
-let xCan = windowWidth, yCan = windowHeight;
+let backgroundColor, circle, rectangle;
 
 function setup() {
   // Canvas & color settings
@@ -45,20 +47,38 @@ function setup() {
   colorMode(HSB, 360, 100, 100);
   backgroundColor = 95;
   // This variable contains a JSON object
-  spherePos = {
+  circle = {
     "x": 100,
-    "y": 100
+    "y": 100,
+    w: 20,
+    h: 20,
+  }
+  
+  rectangle = {
+    x: 300,
+    y: 300,
+    w: 20,
+    h: 20,
   }
 }
 
 function draw() {
   background(backgroundColor);
-  ellipse(spherePos.x, spherePos.y, 20, 20);
-  // rect(rectPosition.x, rectPosition.y, 20, 20);
-  // line(spherePosition.x, spherePosition.y, rectPosition.x, rectPosition.y);
+  ellipse(circle.x, circle.y, circle.w, circle.h);
+  rect(rectangle.x, rectangle.y, rectangle.w, rectangle.h);
+  line(circle.x, circle.y, rectangle.x+rectangle.w/2, rectangle.y+rectangle.w/2);
+  
+  text(`Dist between circle and square is ${dist(circle, rectangle)}`, 10, 10);
+}
+
+
+function dist(p, p1) {
+  let deltaX = p.x - p1.x;
+  let deltaY = p.y - p1.y;
+  return Math.sqrt((deltaX ** 2) + (deltaY ** 2));;
 }
 
 function mousePressed() {
-  spherePos.x = random(width);
-  spherePos.y = random(height);
+  circle.x = random(width);
+  circle.y = random(height);
 }
