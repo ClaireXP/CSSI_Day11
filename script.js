@@ -37,10 +37,11 @@ but here are some ideas if you need inspiration.
  *    windowWidth, windowHeight,
  *    rect, line,
  *    text, mouseX, mouseY, textSize,
- *    collidePointCircle,
+ *    collidePointCircle, noCursor,
  */
 
 let backgroundColor, circle, mouse, can, dist, temp, max;
+let circleSize = 30;
 
 function setup() {
   // Canvas & color settings
@@ -49,19 +50,18 @@ function setup() {
   backgroundColor = 95;
   // This variable contains a JSON object
   circle = {
-    x: random(10, width - 10),
-    y: random(10, height - 10),
-    w: 20,
-    h: 20
+    x: random(circleSize/2, width - circleSize/2),
+    y: random(circleSize/2, height - circleSize/2),
+    w: circleSize,
+    h: circleSize,
   };
 
   mouse = {
     x: random(width),
     y: random(height),
-    w: 20,
-    h: 20
   };
-
+  
+  noCursor();
   distance(circle, mouse);
   maxDist();
   backgroundColor = (dist * 250) / max;
