@@ -48,8 +48,8 @@ function setup() {
   backgroundColor = 95;
   // This variable contains a JSON object
   circle = {
-    "x": random(width)-10,
-    "y": random(height)-10,
+    "x": random(10, width-10),
+    "y": random(10, height-10),
     w: 20,
     h: 20,
   }
@@ -63,20 +63,21 @@ function setup() {
 }
 
 function draw() {
-  background(backgroundColor);
+  background(backgroundColor, 40, 80);
   ellipse(circle.x, circle.y, circle.w, circle.h);
   line(circle.x, circle.y, mouse.x, mouse.y);
   
   distance(circle, mouse);
+  
+  hotOrCold();
 }
-
 
 function distance(p, p1) {
   let deltaX = p.x - p1.x;
   let deltaY = p.y - p1.y;
   dist = Math.round(Math.sqrt((deltaX ** 2) + (deltaY ** 2)));
   
-  // backgroundColor = dist%360;
+  backgroundColor = dist%360;
   
   text(`Dist between circle and mouse is ${dist}.`, 10, 10);
 }
@@ -86,7 +87,32 @@ function mousePressed(can) {
   circle.y = random(circle.w/2, height-circle.w/2);
 }
 
+function maxDist(p){
+  if(p.x < width/2){
+    
+  }
+}
+
 function mouseMoved(can){
   mouse.x = mouseX;
   mouse.y = mouseY;
+}
+
+function hotOrCold(){
+  let temp;
+  
+  switch(dist){
+    case dist<width/5:
+      temp = "sizzle sizzle";
+    case dist<2*width/5:
+      temp = "hot";
+    case dist<3*width/5:
+      temp = "warm";
+    case dist<4*width/5:
+      temp = "cool";
+    case dist<width:
+      temp = "cold";
+  }
+  
+  text(`Dist between circle and mouse is ${dist}.`, width/2);
 }
