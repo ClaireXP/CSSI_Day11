@@ -31,6 +31,10 @@ but here are some ideas if you need inspiration.
  *    colorMode,
  *    HSB,
  *    background,
+ *    ellipse,
+ *    random,
+ *    width,
+ *    height,
  */
 
 let backgroundColor, spherePosition, rectPosition

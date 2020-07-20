@@ -4,6 +4,17 @@
  *    colorMode,
  *    HSB,
  *    background,
+ *    ellipse,
+ *    random,
+ *    width,
+ *    height,
+ *    rect,
+ *    text,
+ *    mouseX,
+ *    mouseY,
+ *    round,
+ *    sqrt,
+ *    color,
  */
 
 let backgroundColor, spherePosition, rectPosition
